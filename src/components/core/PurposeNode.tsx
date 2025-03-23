@@ -1,19 +1,19 @@
-// src/components/core/PurposeNode.tsx
 import React from 'react';
 import { TreeNode } from '../../contexts/TreeDataContext';
 
 interface PurposeNodeProps {
   node: TreeNode;
   isVisible: boolean;
+  className?: string;
 }
 
-const PurposeNode: React.FC<PurposeNodeProps> = ({ node, isVisible }) => {
+const PurposeNode: React.FC<PurposeNodeProps> = ({ node, isVisible, className = '' }) => {
   if (!isVisible) return null;
   
   const { x, y } = node;
   
   return (
-    <g>
+    <g className={className}>
       <rect
         x={x - 22.5}
         y={y - 22.5}
