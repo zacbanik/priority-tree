@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import { Commitment } from '../../contexts/TreeDataContext';
 import WeightSelector from './WeightSelector';
+import { TooltipWrapper } from '../onboarding/TooltipProvider';
 
 interface CommitmentPanelProps {
   title: string;
@@ -54,10 +55,14 @@ const CommitmentPanel: React.FC<CommitmentPanelProps> = ({
         />
         
         <div className="flex gap-2">
-          <WeightSelector 
-            value={newWeight} 
-            onChange={setNewWeight} 
-          />
+          <TooltipWrapper tipId="weight-system">
+            <div className="weight-selector">
+              <WeightSelector 
+                value={newWeight} 
+                onChange={setNewWeight} 
+              />
+            </div>
+          </TooltipWrapper>
           
           <button
             onClick={handleAddCommitment}
