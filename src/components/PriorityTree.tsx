@@ -5,7 +5,6 @@ import NodeConnections from './core/NodeConnections';
 import CommitmentCircle from './core/CommitmentCircle';
 import PurposeNode from './core/PurposeNode';
 import CommitmentPanel from './ui/CommitmentPanel';
-import { TooltipWrapper } from './onboarding/TooltipProvider';
 
 const PriorityTree: React.FC = () => {
   const {
