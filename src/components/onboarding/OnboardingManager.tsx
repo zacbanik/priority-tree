@@ -89,19 +89,3 @@ const OnboardingManager: React.FC = () => {
 };
 
 export default OnboardingManager;
-
-// Extend the TooltipWrapper with additional tip IDs
-
-// Add these to src/components/onboarding/TooltipProvider.tsx tooltips object
-/*
-'tutorial-button': {
-  id: 'tutorial-button',
-  content: 'Start an interactive tutorial to learn how to use Priority Tree',
-  position: 'right'
-},
-'help-button': {
-  id: 'help-button',
-  content: 'Access documentation, guides, and example scenarios',
-  position: 'right'
-}
-*/
