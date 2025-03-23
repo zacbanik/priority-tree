@@ -1,4 +1,3 @@
-// src/data/tutorialSteps.ts
 import { TutorialStep } from '../components/onboarding/TutorialOverlay';
 
 export const tutorialSteps: TutorialStep[] = [
