@@ -1,3 +1,4 @@
+// src/App.tsx - FIXED VERSION
 import React, { useState } from 'react';
 import { TreeDataProvider } from './contexts/TreeDataContext';
 import PriorityTree from './components/PriorityTree';
@@ -5,16 +6,16 @@ import PersistenceService from './services/PersistenceService';
 import { Save, Upload, Trash2 } from 'lucide-react';
 import OnboardingManager from './components/onboarding/OnboardingManager';
 
-
-import { useTreeData } from './contexts/TreeDataContext';
-
 const App: React.FC = () => {
-  // Get the commitments data from context
-  const { commitments } = useTreeData();
   const [importStatus, setImportStatus] = useState<string | null>(null);
   
   const handleExport = () => {
-    PersistenceService.exportToJson(commitments, 'priority-tree-data.json');
+    // Don't try to access the context directly from App component
+    // Just trigger the export from localStorage directly
+    PersistenceService.exportToJson(
+      JSON.parse(localStorage.getItem('priorityTreeCommitments') || '{}'),
+      'priority-tree-data.json'
+    );
   };
   
   const handleImport = async () => {
