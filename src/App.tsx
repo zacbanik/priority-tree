@@ -5,11 +5,16 @@ import PersistenceService from './services/PersistenceService';
 import { Save, Upload, Trash2 } from 'lucide-react';
 import OnboardingManager from './components/onboarding/OnboardingManager';
 
+
+import { useTreeData } from './contexts/TreeDataContext';
+
 const App: React.FC = () => {
+  // Get the commitments data from context
+  const { commitments } = useTreeData();
   const [importStatus, setImportStatus] = useState<string | null>(null);
   
   const handleExport = () => {
-    PersistenceService.exportToJson({}, 'priority-tree-data.json');
+    PersistenceService.exportToJson(commitments, 'priority-tree-data.json');
   };
   
   const handleImport = async () => {
