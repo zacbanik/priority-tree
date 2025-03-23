@@ -36,7 +36,6 @@ const PriorityTree: React.FC = () => {
           >
             {level.nodes.map(node => (
               <g key={node.name}>
-                <TooltipWrapper tipId="main-circles">
                   <TreeNode
                     node={node}
                     isSelected={selectedLevel === node.name}
@@ -44,28 +43,23 @@ const PriorityTree: React.FC = () => {
                     onClick={() => setSelectedLevel(node.name)}
                     className={isLevelUnbalanced(levelIndex) ? 'stress-indicator' : ''}
                   />
-                </TooltipWrapper>
-                
-                <TooltipWrapper tipId="commitment-circles">
+        
                   <CommitmentCircle
                     nodeName={node.name}
                     nodeX={node.x}
                     nodeY={node.y}
                     commitments={commitments[node.name] || []}
                   />
-                </TooltipWrapper>
               </g>
             ))}
           </g>
         ))}
-        
-        <TooltipWrapper tipId="purpose-node">
+      
           <PurposeNode
             node={treeStructure.center}
             isVisible={isTreeBalanced()}
             className="purpose-node"
           />
-        </TooltipWrapper>
       </svg>
 
       {selectedLevel && (
