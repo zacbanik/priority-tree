@@ -1,5 +1,5 @@
 // src/hooks/useLocalStorage.ts
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 // Generic type for the hook to work with any data structure
 function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T | ((val: T) => T)) => void] {
