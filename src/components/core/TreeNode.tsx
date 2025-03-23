@@ -1,4 +1,3 @@
-// src/components/core/TreeNode.tsx
 import React from 'react';
 import { TreeNode as TreeNodeType } from '../../contexts/TreeDataContext';
 
@@ -7,15 +6,23 @@ interface TreeNodeProps {
   isSelected: boolean;
   shouldPulse: boolean;
   onClick: () => void;
+  className?: string;
 }
 
-const TreeNode: React.FC<TreeNodeProps> = ({ node, isSelected, shouldPulse, onClick }) => {
+const TreeNode: React.FC<TreeNodeProps> = ({ 
+  node, 
+  isSelected, 
+  shouldPulse, 
+  onClick,
+  className = '' 
+}) => {
   const { name, x, y } = node;
   
   return (
     <g 
       onClick={onClick}
-      className={shouldPulse ? 'animate-pulse' : ''}
+      className={`tree-node ${shouldPulse ? 'animate-pulse' : ''} ${className}`}
+      data-node-name={name}
     >
       <circle
         cx={x}
