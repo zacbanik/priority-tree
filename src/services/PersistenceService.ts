@@ -64,4 +64,5 @@ class PersistenceService {
   }
 }
 
-export default new PersistenceService();
+const persistenceService = new PersistenceService();
+export default persistenceService;
