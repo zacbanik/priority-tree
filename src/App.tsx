@@ -1,9 +1,9 @@
-// src/App.tsx
 import React, { useState } from 'react';
 import { TreeDataProvider } from './contexts/TreeDataContext';
 import PriorityTree from './components/PriorityTree';
 import PersistenceService from './services/PersistenceService';
 import { Save, Upload, Trash2 } from 'lucide-react';
+import OnboardingManager from './components/onboarding/OnboardingManager';
 
 const App: React.FC = () => {
   const [importStatus, setImportStatus] = useState<string | null>(null);
@@ -45,7 +45,7 @@ const App: React.FC = () => {
           <div className="flex gap-2">
             <button 
               onClick={handleExport}
-              className="p-2 bg-blue-600 text-white rounded flex items-center gap-1"
+              className="p-2 bg-blue-600 text-white rounded flex items-center gap-1 export-button"
             >
               <Save size={16} />
               <span>Export</span>
@@ -82,6 +82,9 @@ const App: React.FC = () => {
         <footer className="p-2 bg-gray-800 text-white text-center text-xs">
           Priority Tree - A tool for balanced life commitments
         </footer>
+        
+        {/* Onboarding & Documentation Manager */}
+        <OnboardingManager />
       </div>
     </TreeDataProvider>
   );
