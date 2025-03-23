@@ -1,71 +1,68 @@
-// src/components/onboarding/TooltipProvider.tsx
-import React from 'react';
-import Tooltip from './Tooltip';
+import React, { useState, useEffect, useRef } from 'react';
 
-interface TooltipConfig {
-  id: string;
+interface TooltipProps {
   content: string;
+  children: React.ReactNode;
   position?: 'top' | 'right' | 'bottom' | 'left';
 }
 
-const tooltips: Record<string, TooltipConfig> = {
-  'main-circles': {
-    id: 'main-circles',
-    content: 'These circles represent different life spheres. Each level balances with those above and below it.',
-    position: 'right'
-  },
-  'weight-system': {
-    id: 'weight-system',
-    content: 'Weights range from -7 to +7. Positive weights represent commitments that energize you, while negative weights represent necessary commitments that drain energy.',
-    position: 'bottom'
-  },
-  'stress-indicators': {
-    id: 'stress-indicators',
-    content: 'Red outlines indicate imbalance between levels. When upper levels demand more energy than lower levels can support, stress occurs.',
-    position: 'left'
-  },
-  'commitment-circles': {
-    id: 'commitment-circles',
-    content: 'These smaller circles represent individual commitments. The number shows the weight (-7 to +7) of each commitment.',
-    position: 'left'
-  },
-  'purpose-node': {
-    id: 'purpose-node',
-    content: 'The center node appears when all levels are in balance, representing alignment with your core purpose.',
-    position: 'top'
-  },
-  'tutorial-button': {
-    id: 'tutorial-button',
-    content: 'Start an interactive tutorial to learn how to use Priority Tree',
-    position: 'right'
-  },
-  'help-button': {
-    id: 'help-button',
-    content: 'Access documentation, guides, and example scenarios',
-    position: 'right'
-  }
-};
-
-interface TooltipWrapperProps {
-  tipId: string;
-  children: React.ReactNode;
-}
-
-export const TooltipWrapper: React.FC<TooltipWrapperProps> = ({ tipId, children }) => {
-  const tooltipConfig = tooltips[tipId];
+const Tooltip: React.FC<TooltipProps> = ({ content, children, position = 'top' }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const targetRef = useRef<HTMLDivElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
   
-  if (!tooltipConfig) {
-    return <>{children}</>;
-  }
+  useEffect(() => {
+    if (!isVisible || !targetRef.current || !tooltipRef.current) return;
+    
+    const targetRect = targetRef.current.getBoundingClientRect();
+    const tooltipRect = tooltipRef.current.getBoundingClientRect();
+    
+    const buffer = 8;
+    let top = 0;
+    let left = 0;
+    
+    switch (position) {
+      case 'top':
+        top = targetRect.top - tooltipRect.height - buffer;
+        left = targetRect.left + (targetRect.width / 2) - (tooltipRect.width / 2);
+        break;
+      case 'right':
+        top = targetRect.top + (targetRect.height / 2) - (tooltipRect.height / 2);
+        left = targetRect.right + buffer;
+        break;
+      case 'bottom':
+        top = targetRect.bottom + buffer;
+        left = targetRect.left + (targetRect.width / 2) - (tooltipRect.width / 2);
+        break;
+      case 'left':
+        top = targetRect.top + (targetRect.height / 2) - (tooltipRect.height / 2);
+        left = targetRect.left - tooltipRect.width - buffer;
+        break;
+    }
+    
+    tooltipRef.current.style.top = `${top}px`;
+    tooltipRef.current.style.left = `${left}px`;
+  }, [isVisible, position]);
   
   return (
-    <Tooltip 
-      content={tooltipConfig.content} 
-      position={tooltipConfig.position}
+    <div 
+      className="relative inline-block"
+      ref={targetRef}
+      onMouseEnter={() => setIsVisible(true)}
+      onMouseLeave={() => setIsVisible(false)}
     >
       {children}
-    </Tooltip>
+      
+      {isVisible && (
+        <div
+          ref={tooltipRef}
+          className="fixed z-50 bg-gray-800 text-white px-3 py-2 rounded shadow-lg text-sm max-w-xs"
+        >
+          {content}
+        </div>
+      )}
+    </div>
   );
 };
 
-export default tooltips;
+export default Tooltip;
